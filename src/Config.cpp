@@ -19,8 +19,8 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 //
 // $Source: /home/pablo/Desarrollo/sags-cvs/clienttext/src/Config.cpp,v $
-// $Revision: 1.1 $
-// $Date: 2005/03/21 15:33:27 $
+// $Revision: 1.2 $
+// $Date: 2005/03/23 22:20:48 $
 //
 
 #include <iostream>
@@ -38,7 +38,7 @@ using namespace std;
 Configuration::Configuration ()
 {
 	ConfigFile = NULL;
-	FileName = NULL;
+	memset (FileName, 0, CONF_MAX_FILENAME + 1);
 }
 
 Configuration::~Configuration ()
@@ -46,30 +46,61 @@ Configuration::~Configuration ()
 	
 }
 
-void Configuration::GetOptionsFromFile (ifstream *file, const char *filename)
+void Configuration::GetOptionsFromFile (const char *filename)
 {
 	char line[CONF_MAX_LINE + 1];
 	char *group = NULL, *name = NULL, *data = NULL;
 	int i, value;
 	unsigned int n;
+	bool using_default_config_file = false;
 
 	if (filename != NULL)
-		FileName = filename;
-
-	if (file != NULL)
 	{
-		// El archivo ya viene abierto
-		ConfigFile = file;
+		// copiamos sólo si no está vacío
+		if (strlen (filename))
+			strncpy (FileName, filename, strlen (filename));
 	}
-	else
-	{
-		// reutilizar el archivo
-		if (ConfigFile != NULL)
-		{
-			ConfigFile->open (FileName);
 
-			// archivo reabierto queda en EOF
+	// si no se especificó un archivo de configuración
+	// usamos $HOME/.sagscl-text
+	if (strlen (FileName) == 0)
+	{
+		snprintf (FileName, CONF_MAX_FILENAME + 1, "%s/.%s", getenv("HOME"), PACKAGE);
+		using_default_config_file = true;
+	}
+
+	// reutilizar el archivo
+	if (ConfigFile != NULL)
+		ConfigFile->open (FileName);
+	else
+		// abrimos para lectura
+		ConfigFile = new fstream (FileName, ios::in);
+
+	// archivo reabierto queda en EOF
+	ConfigFile->clear ();
+
+	// si el archivo no existe, entonces terminamos el programa,
+	// a menos que el archivo que no se pudo abrir fuera $HOME/.sagscl-text
+	// y en ese caso lo creariamos y vaciaríamos en él los valores por defecto
+	if (!ConfigFile->is_open ())
+	{
+		if (using_default_config_file)
+		{
+			Logs.Add (Log::Config | Log::Info,
+				  _("Using default file \"%s\""), FileName);
+
+			// escribir opciones por defecto
+			WriteOptions ();
+
+			// reabrimos el archivo y lo reseteamos
+			ConfigFile->open (FileName, ios::in);
 			ConfigFile->clear ();
+		}
+		else
+		{
+			Logs.Add (Log::Config | Log::Critical,
+				  _("%s: %s"), FileName, strerror (errno));
+			errno = 0;
 		}
 	}
 
@@ -366,6 +397,17 @@ bool Configuration::Check (const char *group, const char *name)
 	opt = list.Find (searched);
 
 	return (opt != NULL);
+}
+
+void Configuration::WriteOptions (void)
+{
+	// crear archivo por defecto
+	ConfigFile->open (FileName, ios::in | ios::out | ios::trunc);
+
+	// TODO: recorrer list sacando las opciones
+	//       y escribiéndolas al archivo
+
+	ConfigFile->close ();
 }
 
 // definimos el objeto

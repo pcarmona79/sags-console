@@ -19,8 +19,8 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 //
 // $Source: /home/pablo/Desarrollo/sags-cvs/clienttext/src/Config.hpp,v $
-// $Revision: 1.1 $
-// $Date: 2005/03/21 15:33:27 $
+// $Revision: 1.2 $
+// $Date: 2005/03/23 22:20:50 $
 //
 
 #ifndef __CONFIG_HPP__
@@ -36,7 +36,7 @@
 #ifdef ENABLE_NLS
 #  include <libintl.h>
 #  define _(s) gettext (s)
-#  define N_(s) gettext_noop (s)
+#  define N_(s) (s)
 #else
 #  define _(s) (s)
 #  define N_(s) (s)
@@ -47,6 +47,7 @@ using namespace std;
 #define CONF_MAX_NAME      50
 #define CONF_MAX_STRING   100
 #define CONF_MAX_LINE     (CONF_MAX_NAME*2 + CONF_MAX_STRING + 2)
+#define CONF_MAX_FILENAME 255 // ¿bastará con esto?
 
 namespace Conf
 {
@@ -93,14 +94,14 @@ class Configuration
 {
 private:
 	List<struct option> list;
-	ifstream *ConfigFile;
-	const char *FileName;
+	fstream *ConfigFile;
+	char FileName[CONF_MAX_FILENAME + 1];
 
 public:
 	Configuration ();
 	~Configuration ();
 
-	void GetOptionsFromFile (ifstream *file = NULL, const char *filename = NULL);
+	void GetOptionsFromFile (const char *filename = NULL);
 	struct option *Add (Conf::OpType type, const char *group, const char *name, int val);
 	struct option *Add (Conf::OpType type, const char *group, const char *name, const char *val);
 	struct option *Get (Conf::OpType type, const char *group, const char *name, int val);
@@ -108,6 +109,7 @@ public:
 	void Set (Conf::OpType type, const char *group, const char *name, int val);
 	void Set (Conf::OpType type, const char *group, const char *name, const char *val);
 	bool Check (const char *group, const char *name);
+	void WriteOptions (void);
 };
 
 extern Configuration Config;

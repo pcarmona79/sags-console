@@ -19,8 +19,8 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 //
 // $Source: /home/pablo/Desarrollo/sags-cvs/clienttext/src/UI.hpp,v $
-// $Revision: 1.1 $
-// $Date: 2005/03/21 15:33:27 $
+// $Revision: 1.2 $
+// $Date: 2005/03/23 22:20:50 $
 //
 
 #ifndef __UI_HPP__
@@ -37,6 +37,6 @@ public:
 	~UserInterface ();
 };
 
-extern UserInterface UI;
+extern UserInterface *NUI;
 
 #endif // __UI_HPP__

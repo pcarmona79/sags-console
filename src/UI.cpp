@@ -19,11 +19,12 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 //
 // $Source: /home/pablo/Desarrollo/sags-cvs/clienttext/src/UI.cpp,v $
-// $Revision: 1.1 $
-// $Date: 2005/03/21 15:33:27 $
+// $Revision: 1.2 $
+// $Date: 2005/03/23 22:20:50 $
 //
 
 #include "UI.hpp"
+#include "Config.hpp"
 
 UserInterface::UserInterface ()
 {
@@ -34,15 +35,16 @@ UserInterface::UserInterface ()
 	Window::ScreenCheck ();
 
 	// Creamos las ventanas a usar
-	Menu = new Window ("Menu", WINDOW_EXPAND, 1, COLOR_GREEN, COLOR_BLUE,
+	Menu = new Window (_("Menu"), WINDOW_EXPAND, 1, COLOR_GREEN, COLOR_BLUE,
 			   WINDOW_PACK_TOP | WINDOW_RESIZEABLE_X);
-	List = new Window ("List", WINDOW_EXPAND, 1, COLOR_YELLOW, COLOR_BLACK,
-			   WINDOW_PACK_TOP | WINDOW_RESIZEABLE_X | WINDOW_COLOR_BOLD);
-	Input = new Window ("Input", WINDOW_EXPAND, 1, COLOR_WHITE, COLOR_BLACK,
+	List = new Window (_("List: "), WINDOW_EXPAND, 1, COLOR_YELLOW, COLOR_BLACK,
+			   WINDOW_PACK_TOP | WINDOW_RESIZEABLE_X | WINDOW_COLOR_BOLD |
+			   WINDOW_SHOW_LABEL);
+	Input = new Window (N_("»"), WINDOW_EXPAND, 1, COLOR_WHITE, COLOR_BLACK,
+			   WINDOW_PACK_BOTTOM | WINDOW_RESIZEABLE_X | WINDOW_SHOW_LABEL);
+	Info = new Window (_("Info"), WINDOW_EXPAND, 1, COLOR_YELLOW, COLOR_BLUE,
 			   WINDOW_PACK_BOTTOM | WINDOW_RESIZEABLE_X);
-	Info = new Window ("Info", WINDOW_EXPAND, 1, COLOR_YELLOW, COLOR_BLUE,
-			   WINDOW_PACK_BOTTOM | WINDOW_RESIZEABLE_X);
-	Output = new Window ("Output", WINDOW_EXPAND, WINDOW_EXPAND, COLOR_WHITE, COLOR_BLACK,
+	Output = new Window (_("Output"), WINDOW_EXPAND, WINDOW_EXPAND, COLOR_WHITE, COLOR_BLACK,
 			     WINDOW_PACK_ALL | WINDOW_RESIZEABLE_X | WINDOW_RESIZEABLE_Y);
 }
 
@@ -64,4 +66,4 @@ UserInterface::~UserInterface ()
 }
 
 // definimos el objeto
-UserInterface UI;
+UserInterface *NUI;

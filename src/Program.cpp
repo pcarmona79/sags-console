@@ -19,8 +19,8 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 //
 // $Source: /home/pablo/Desarrollo/sags-cvs/clienttext/src/Program.cpp,v $
-// $Revision: 1.1 $
-// $Date: 2005/03/21 15:33:27 $
+// $Revision: 1.2 $
+// $Date: 2005/03/23 22:20:50 $
 //
 
 #include <sys/types.h>
@@ -35,6 +35,8 @@
 #include "Network.hpp"
 #include "Main.hpp"
 #include "Opt.hpp"
+#include "UI.hpp"
+#include "Config.hpp"
 
 int main (int argc, char **argv)
 {
@@ -46,6 +48,11 @@ int main (int argc, char **argv)
 		{"conf", 'c', OPT_STRING, (void *) config_file, 101},
 		{0, 0, 0, 0, 0}
 	};
+
+#ifdef ENABLE_NLS
+	textdomain (GETTEXT_PACKAGE);
+	bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
+#endif
 
 	// revisamos la línea de comandos
 	n = Opt.Parse (argc, argv, options);	
@@ -61,27 +68,22 @@ int main (int argc, char **argv)
 		exit (EXIT_FAILURE);
 	}
 
-	// si no se especificó un archivo de configuración
-	// usamos $HOME/.sagscl-text
-	if (strlen (config_file) == 0)
-		snprintf (config_file, 101, "%s/.%s", getenv("HOME"), PACKAGE);
-
 	// el programa principal comienza aquí
 	Application.Init (debug_mode);
 
+	// iniciamos la interfaz de usuario
+	NUI = new UserInterface ();
+
 	//Server.AddOptions ();
-	//Logs.AddOptions ();
+	Logs.AddOptions ();
 	//Application.AddOptions ();
 
-	//Logs.Start ();
+	Logs.Start ();
 
-/*	if (absolute_config_file != NULL)
-		Config.GetOptionsFromFile (&configuration, absolute_config_file);
-	else
-		Config.GetOptionsFromFile (&configuration, config_file);
+	Config.GetOptionsFromFile (config_file);
 
-	Logs.Add (Log::Info, "SAGS Server version %s", VERSION);
-*/
+	Logs.Add (Log::Info, _("SAGS Text Client version %s"), VERSION);
+
 	//Server.Start ();
 
 	//retval = Application.Run ();
@@ -89,6 +91,9 @@ int main (int argc, char **argv)
 	// si estamos aquí es que estamos saliendo
 	Logs.Add (Log::Notice, _("Exiting with %d"), retval);
 	getchar ();
+
+	// terminamos la interfaz de usuario
+	delete NUI;
 
 	return retval;
 }

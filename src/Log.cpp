@@ -19,8 +19,8 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 //
 // $Source: /home/pablo/Desarrollo/sags-cvs/clienttext/src/Log.cpp,v $
-// $Revision: 1.1 $
-// $Date: 2005/03/21 15:33:27 $
+// $Revision: 1.2 $
+// $Date: 2005/03/23 22:20:50 $
 //
 
 #include <iostream>
@@ -51,7 +51,7 @@ Logging::~Logging ()
 
 void Logging::AddOptions (void)
 {
-	logfile = Config.Add (Conf::String, "Logging", "File", "/dev/null");
+	logfile = Config.Add (Conf::String, "Logging", "File", "stdout");
 	debug = Config.Add (Conf::Boolean, "Logging", "Debug", 0);
 }
 
@@ -144,8 +144,8 @@ void Logging::Add (int type, const char* fmt, ...)
 	}
 
 	if (standard_output)
-		//cout << tm << " " << hdr << msg << endl;
-		UI.Output->Print ("%s %s: %s\n", tm, hdr, msg);
+		//NUI->Output->Print ("%s %s: %s\n", tm, hdr, msg);
+		NUI->Output->Print ("%s: %s\n", hdr, msg);
 	else
 		file << tm << " " << hdr << msg << endl;
 

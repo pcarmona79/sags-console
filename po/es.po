@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sagscl-text 0.1.0\n"
 "Report-Msgid-Bugs-To: pcarm@users.sourceforge.net\n"
-"POT-Creation-Date: 2005-03-20 04:28-0400\n"
-"PO-Revision-Date: 2005-03-20 04:14-0400\n"
+"POT-Creation-Date: 2005-03-23 16:02-0400\n"
+"PO-Revision-Date: 2005-03-23 15:51-0400\n"
 "Last-Translator: Pablo Carmona Amigo <pcarm@users.sourceforge.net>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,22 +17,32 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/Config.cpp:115
+#: src/Config.cpp:90
+#, c-format
+msgid "Using default file \"%s\""
+msgstr "Usando archivo por defecto \"%s\""
+
+#: src/Config.cpp:102
+#, c-format
+msgid "%s: %s"
+msgstr "%s: %s"
+
+#: src/Config.cpp:146
 #, c-format
 msgid "No group! Line %d isn't a valid configure line"
 msgstr "No hay grupo! Línea %d no es una línea de configuración válida"
 
-#: src/Config.cpp:134 src/Config.cpp:145
+#: src/Config.cpp:165 src/Config.cpp:176
 #, c-format
 msgid "Line %d isn't a valid configure line"
 msgstr "Línea %d no es una línea de configuración válida"
 
-#: src/Config.cpp:186
+#: src/Config.cpp:217
 #, c-format
 msgid "Number not valid at line %d"
 msgstr "Número no válido en línea %d"
 
-#: src/Config.cpp:210
+#: src/Config.cpp:241
 #, c-format
 msgid "Processed file \"%s\""
 msgstr "Archivo procesado \"%s\""
@@ -115,20 +125,45 @@ msgstr "Uso: %s [-D] [<archivo-configuración>]\n"
 msgid "       -D: debug mode\n"
 msgstr "       -D: modo de depuración\n"
 
-#: src/Program.cpp:57
+#: src/Program.cpp:64
 #, c-format
 msgid "There is an invalid option: '%c'\n"
-msgstr ""
+msgstr "Hay una opción inválida: '%c'\n"
 
-#: src/Program.cpp:59
+#: src/Program.cpp:66
 #, c-format
 msgid "There is an invalid option: \"%s\"\n"
-msgstr ""
+msgstr "Hay una opción inválida: \"%s\"\n"
 
-#: src/Program.cpp:90
+#: src/Program.cpp:85
+#, c-format
+msgid "SAGS Text Client version %s"
+msgstr "Cliente SAGS Texto versión %s"
+
+#: src/Program.cpp:92
 #, c-format
 msgid "Exiting with %d"
 msgstr "Saliendo con %d"
+
+#: src/UI.cpp:38
+msgid "Menu"
+msgstr "Menú"
+
+#: src/UI.cpp:40
+msgid "List: "
+msgstr "Lista: "
+
+#: src/UI.cpp:43
+msgid "»"
+msgstr "»"
+
+#: src/UI.cpp:45
+msgid "Info"
+msgstr "Info"
+
+#: src/UI.cpp:47
+msgid "Output"
+msgstr "Salida"
 
 #~ msgid "config_file: %s\n"
 #~ msgstr "config_file: %s\n"

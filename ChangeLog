@@ -1,3 +1,20 @@
+2005-03-23  Pablo Carmona Amigo  <pcarm@users.sourceforge.net>
+
+	* src/Config.cpp, src/Config.hpp (GetOptionsFromFile): removed
+	ifstream parameter. Default config file creation is done here.
+	(WriteOptions): creation and options dumping will be done here.
+
+	* src/Program.cpp (main): Added gettext support.
+	(main): [NUI]: memory assignation is done here.
+
+	* src/Window.cpp (Window): Print window's label if required by new
+	option flag WINDOW_SHOW_LABEL.
+	(PrintAt): New method to print a text at an arbitrary position of
+	actual window.
+
+	* src/UI.cpp, src/UI.hpp: [NUI]: renamed object from UI. Conflicts
+	with OpenSSL UI typedef. Also was changed to be a pointer.
+
 2005-03-20  Pablo Carmona Amigo  <pcarm@users.sourceforge.net>
 
 	* src/Window.cpp, src/Window.hpp: Added color support.

@@ -19,12 +19,13 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 //
 // $Source: /home/pablo/Desarrollo/sags-cvs/clienttext/src/Window.cpp,v $
-// $Revision: 1.1 $
-// $Date: 2005/03/21 15:33:27 $
+// $Revision: 1.2 $
+// $Date: 2005/03/23 22:20:51 $
 //
 
+#include <cstring>
 #include <cstdarg>
-#include "Log.hpp"
+#include "Log.hpp"     // para definir LOG_MAX_STRING
 #include "Window.hpp"
 
 // Inicialización de variables estáticas
@@ -100,9 +101,12 @@ Window::Window (const char *label, int width, int height,
 	// creamos la ventana Ncurses
 	w_ncwin = subwin (stdscr, w_lines, w_columns, w_top_line, w_top_col);
 
-	Print ("/%s: %dx%d (%d,%d) [%dx%d] +%d TL%d BL%d/\n", w_label, w_lines, w_columns,
-	       w_top_line, w_top_col, scr_lines, scr_columns, scr_available_lines,
-	       scr_top_line, scr_bottom_line);
+	if (options & WINDOW_SHOW_LABEL)
+		PrintAt (0, 0, w_label);
+
+// 	Print ("/%s: %dx%d (%d,%d) [%dx%d] +%d TL%d BL%d/\n", w_label, w_lines, w_columns,
+// 	       w_top_line, w_top_col, scr_lines, scr_columns, scr_available_lines,
+// 	       scr_top_line, scr_bottom_line);
 
 	// fijamos los colores
 	if (scr_has_color)
@@ -146,8 +150,21 @@ void Window::ScreenInit (void)
 
 void Window::ScreenCheck (void)
 {
+	// FIXME: las lineas disponibles no deberian cambiar necesariamente si se
+	//        cambia el tamaño de la pantalla. Cambian cuando todas las ventanas
+	//        son fijas (ninguna se expande en líneas) y corresponde a la diferencia
+	//        entre las líneas anteriores y las nuevas. Si hay una ventana que se
+	//        expande en líneas (WINDOW_RESIZEABLE_Y), todo el espacio ganado en
+	//        líneas será asignado a esa ventana (si hay más de una se asigna un
+	//        valor igual para todas).
+
+	// TODO: usar otras variables para obtener el nuevo número de columnas y filas
+	//       con el fin de calcular las diferencias de tamaños y las nuevas
+	//       posiciones.
+
 	getmaxyx (stdscr, scr_lines, scr_columns);
 	scr_bottom_line = scr_lines - 1;
+
 	scr_available_lines = scr_lines;
 	scr_available_columns = scr_columns;
 }
@@ -171,5 +188,18 @@ void Window::Print (const char* fmt, ...)
 	va_end (ap);
 
 	wprintw (w_ncwin, "%s", msg);
+	wrefresh (w_ncwin);
+}
+
+void Window::PrintAt (int y, int x, const char* fmt, ...)
+{
+	char msg[LOG_MAX_STRING + 1];
+	va_list ap;
+
+	va_start (ap, fmt);
+	vsnprintf (msg, LOG_MAX_STRING + 1, fmt, ap);
+	va_end (ap);
+
+	mvwprintw (w_ncwin, y, x, "%s", msg);
 	wrefresh (w_ncwin);
 }

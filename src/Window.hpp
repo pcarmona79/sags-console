@@ -19,8 +19,8 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 //
 // $Source: /home/pablo/Desarrollo/sags-cvs/clienttext/src/Window.hpp,v $
-// $Revision: 1.1 $
-// $Date: 2005/03/21 15:33:27 $
+// $Revision: 1.2 $
+// $Date: 2005/03/23 22:20:52 $
 //
 
 #ifndef __WINDOW_HPP__
@@ -37,7 +37,8 @@ enum
 	WINDOW_RESIZEABLE_X = 4,
 	WINDOW_RESIZEABLE_Y = 8,
 	WINDOW_COLOR_BOLD = 16,
-	WINDOW_COLOR_REVERSE = 32
+	WINDOW_COLOR_REVERSE = 32,
+	WINDOW_SHOW_LABEL = 64
 };
 
 class Window
@@ -72,6 +73,7 @@ public:
 	static void ScreenEnd (void);
 
 	void Print (const char* fmt, ...);
+	void PrintAt (int y, int x, const char* fmt, ...);
 };
 
 #endif // __WINDOW_HPP__
