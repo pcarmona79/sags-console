@@ -1,0 +1,106 @@
+dnl Process this file with autoconf to produce a configure script.
+
+AC_INIT([sagscl-text], 0.1.0)
+AM_INIT_AUTOMAKE
+AM_CONFIG_HEADER(config.h)
+
+AC_SUBST(CXXFLAGS,$CXXFLAGS)
+AC_PROG_CXX
+AC_PROG_LIBTOOL
+
+dnl Checks for library functions.
+AC_CHECK_LIB([ncurses], [main], ,
+	     AC_MSG_ERROR([
+	Ncurses library not found!
+	Install it before compile this program.]))
+AC_CHECK_HEADERS([curses.h], ,
+		 AC_MSG_ERROR([
+	Basic Ncurses headers not found!
+	Without this headers the program can't be compiled.]))
+AC_CHECK_LIB([ssl], [main], ,
+	     AC_MSG_ERROR([
+	OpenSSL library not found!
+	Install it before compile this program.]))
+AC_CHECK_HEADERS([openssl/ssl.h openssl/err.h], ,
+		 AC_MSG_ERROR([
+	Basic OpenSSL headers not found!
+	Without this headers the program can't be compiled.]))
+
+AC_CHECK_FUNCS([memset getaddrinfo freeaddrinfo gai_strerror], ,
+	       AC_MSG_ERROR([
+	Without this functions the program can't be compiled.]))
+
+dnl Languages which your application supports
+AM_GNU_GETTEXT
+GETTEXT_PACKAGE=sagscl-text
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [Package name for gettext])
+
+dnl Set PACKAGE_LOCALE_DIR in config.h.
+if test "x${prefix}" = "xNONE"; then
+  AC_DEFINE_UNQUOTED(PACKAGE_LOCALE_DIR, "${ac_default_prefix}/${DATADIRNAME}/locale", [Locale dir])
+else
+  AC_DEFINE_UNQUOTED(PACKAGE_LOCALE_DIR, "${prefix}/${DATADIRNAME}/locale", [Locale dir])
+fi
+
+dnl Set PACKAGE SOURCE DIR in config.h.
+packagesrcdir=`cd $srcdir && pwd`
+
+dnl Set PACKAGE PREFIX
+if test "x${prefix}" = "xNONE"; then
+  packageprefix=${ac_default_prefix}
+else
+  packageprefix=${prefix}
+fi
+
+dnl Set PACKAGE DATA & DOC DIR
+packagedatadir=share/${PACKAGE}
+packagemandir=share/man/man1
+if test "x${enable_redhat_docdir}" = "xyes"; then
+  packagedocdir=share/doc/${PACKAGE}-${VERSION}
+else
+  packagedocdir=share/doc/${PACKAGE}
+fi
+
+dnl Set PACKAGE DIRS in config.h.
+packagepixmapsdir=share/pixmaps/${PACKAGE}
+
+dnl Subst PACKAGE_DATA_DIR.
+NO_PREFIX_PACKAGE_DATA_DIR="${packagedatadir}"
+AC_SUBST(NO_PREFIX_PACKAGE_DATA_DIR)
+PACKAGE_DATA_DIR="${packageprefix}/${packagedatadir}"
+AC_SUBST(PACKAGE_DATA_DIR)
+
+dnl Subst PACKAGE_DOC_DIR.
+NO_PREFIX_PACKAGE_DOC_DIR="${packagedocdir}"
+AC_SUBST(NO_PREFIX_PACKAGE_DOC_DIR)
+PACKAGE_DOC_DIR="${packageprefix}/${packagedocdir}"
+AC_SUBST(PACKAGE_DOC_DIR)
+
+dnl Subst PACKAGE_MAN_DIR.
+NO_PREFIX_PACKAGE_MAN_DIR="${packagemandir}"
+AC_SUBST(NO_PREFIX_PACKAGE_MAN_DIR)
+PACKAGE_MAN_DIR="${packageprefix}/${packagemandir}"
+AC_SUBST(PACKAGE_MAN_DIR)
+
+dnl Subst PACKAGE_PIXMAPS_DIR.
+NO_PREFIX_PACKAGE_PIXMAPS_DIR="${packagepixmapsdir}"
+AC_SUBST(NO_PREFIX_PACKAGE_PIXMAPS_DIR)
+PACKAGE_PIXMAPS_DIR="${packageprefix}/${packagepixmapsdir}"
+AC_SUBST(PACKAGE_PIXMAPS_DIR)
+
+AC_DEFINE_UNQUOTED(PACKAGE_DATA_DIR, "${packageprefix}/${packagedatadir}", [Data dir])
+AC_DEFINE_UNQUOTED(PACKAGE_DOC_DIR, "${packageprefix}/${packagedocdir}", [Docs dir])
+AC_DEFINE_UNQUOTED(PACKAGE_MAN_DIR, "${packageprefix}/${packagemandir}", [Mans dir])
+AC_DEFINE_UNQUOTED(PACKAGE_PIXMAPS_DIR, "${packageprefix}/${packagepixmapsdir}", [Pixmaps dir])
+AC_DEFINE_UNQUOTED(PACKAGE_SOURCE_DIR, "${packagesrcdir}", [Source dir])
+
+AC_OUTPUT([
+intl/Makefile
+m4/Makefile
+po/Makefile.in
+src/Makefile
+Makefile
+sagscl-text.spec
+])
+

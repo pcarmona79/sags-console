@@ -1,0 +1,76 @@
+2005-03-20  Pablo Carmona Amigo  <pcarm@users.sourceforge.net>
+
+	* src/Window.cpp, src/Window.hpp: Added color support.
+	[scr_has_color, scr_color_count]: New static variables for Ncurses
+	color support.
+
+	* src/UI.cpp (UserInterface): Window::ScreenCheck is runned here
+	just after to init Ncurses (before it was runned at Window's
+	constructor).
+	(~UserInterface): Ncurses is ended here.
+
+	* src/Program.cpp (main): Now using Opt.hpp for command line
+	parsing.
+
+	* src/Log.cpp, src/Log.hpp: New files. Copied from SAGS
+	Server. Contains logging class.
+
+	* src/Config.cpp, src/Config.hpp: New files. Adapted from SAGS
+	Server. Contains configuration class.
+
+	* po/es.po: Updated spanish translation.
+
+2005-03-19  Pablo Carmona Amigo  <pcarm@users.sourceforge.net>
+
+	* configure.in: Added Ncurses library and headers checking.
+
+	* src/List.hpp: New file. Copied from SAGS Server. Contains list
+	template.
+
+	* src/Loop.cpp, src/Loop.hpp: New files. Derivated from SAGS
+	Server. Contains SelectLoop class based on select() function.
+
+	* src/Main.cpp, src/Main.hpp: New files. Main application's
+	routines.
+
+	* src/Network.cpp, src/Network.hpp: New files. Contains network
+	functions.
+
+	* src/Packet.cpp, src/Packet.hpp: New files. Network packet
+	declaration and definition.
+
+	* src/Program.cpp: New file.
+	(main): Configurates and run the program.
+
+	* src/Opt.cpp, src/Opt.hpp: New files. Contains command line
+	parser class.
+
+	* src/UI.cpp, src/UI.hpp: New files.
+	(UserInterface): New class. Contains all Ncurses windows to be
+	used.
+
+	* src/Utils.cpp, src/Utils.hpp: New files.
+	(Utilities): New class. Contains string utilities.
+	(SubString): Negative position parameters implicates to copy to
+	the end of the string.
+
+	* src/Window.cpp (Window): Available lines are calculated after
+	window's position calculation.
+	(ScreenInit): Added crmode() and keypad() instructions for better
+	managing of user's input.
+
+2005-03-18  Pablo Carmona Amigo  <pcarm@users.sourceforge.net>
+
+	* src/Window.cpp, src/Window.hpp: New files. Contains Window class
+	using Ncurses.
+
+2005-03-17  gettextize  <bug-gnu-gettext@gnu.org>
+
+	* Makefile.am (SUBDIRS): Add intl,
+	(EXTRA_DIST): Add config.rpath.
+	* configure.in (AC_OUTPUT): Add intl/Makefile,
+
+2005-03-17  Pablo Carmona Amigo  <pcarm@users.sourceforge.net>
+
+	* Created files for sagscl-text.
+

@@ -1,0 +1,130 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Pablo Carmona Amigo
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: pcarm@users.sourceforge.net\n"
+"POT-Creation-Date: 2005-03-20 04:28-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/Config.cpp:115
+#, c-format
+msgid "No group! Line %d isn't a valid configure line"
+msgstr ""
+
+#: src/Config.cpp:134 src/Config.cpp:145
+#, c-format
+msgid "Line %d isn't a valid configure line"
+msgstr ""
+
+#: src/Config.cpp:186
+#, c-format
+msgid "Number not valid at line %d"
+msgstr ""
+
+#: src/Config.cpp:210
+#, c-format
+msgid "Processed file \"%s\""
+msgstr ""
+
+#: src/Loop.cpp:45
+msgid "CatchSignal: Received SIGTERM"
+msgstr ""
+
+#: src/Loop.cpp:48
+msgid "CatchSignal: Received SIGINT"
+msgstr ""
+
+#: src/Loop.cpp:51
+msgid "CatchSignal: Received SIGPIPE"
+msgstr ""
+
+#: src/Loop.cpp:54
+msgid "CatchSignal: Received SIGHUP"
+msgstr ""
+
+#: src/Loop.cpp:167
+msgid "pselect was interrupted"
+msgstr ""
+
+#: src/Loop.cpp:255
+#, c-format
+msgid "Timeout seted to %d seconds"
+msgstr ""
+
+#: src/Loop.cpp:264
+msgid "Timeout removed"
+msgstr ""
+
+#: src/Main.cpp:88
+#, c-format
+msgid "Unhandled event %d"
+msgstr ""
+
+#: src/Main.cpp:97
+#, c-format
+msgid "DataEvent: owner=%04X fd=%d writing=%s"
+msgstr ""
+
+#: src/Main.cpp:98
+msgid "true"
+msgstr ""
+
+#: src/Main.cpp:98
+msgid "false"
+msgstr ""
+
+#: src/Main.cpp:103
+msgid "Reading from user's input"
+msgstr ""
+
+#: src/Main.cpp:110
+msgid "Sending data to server"
+msgstr ""
+
+#: src/Main.cpp:115
+msgid "Receiving data from server"
+msgstr ""
+
+#: src/Main.cpp:121
+#, c-format
+msgid "Unknown owner %04X"
+msgstr ""
+
+#: src/Main.cpp:127
+msgid "Timeout event"
+msgstr ""
+
+#: src/Main.cpp:508
+#, c-format
+msgid "Usage: %s [-D] [<config-file>]\n"
+msgstr ""
+
+#: src/Main.cpp:509
+#, c-format
+msgid "       -D: debug mode\n"
+msgstr ""
+
+#: src/Program.cpp:57
+#, c-format
+msgid "There is an invalid option: '%c'\n"
+msgstr ""
+
+#: src/Program.cpp:59
+#, c-format
+msgid "There is an invalid option: \"%s\"\n"
+msgstr ""
+
+#: src/Program.cpp:90
+#, c-format
+msgid "Exiting with %d"
+msgstr ""
